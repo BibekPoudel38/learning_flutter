@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/views/homepage.dart';
 import 'package:movie_app/views/login.dart';
 
 void main() {
@@ -11,11 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: const LoginPage(),
+      routes: {
+        '/homepage': (_) => const Homepage(),
+      },
     );
   }
 }

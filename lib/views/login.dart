@@ -8,91 +8,133 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool obsecure = true;
+
+  // declaring textcontroller for username and password
+  TextEditingController usernameField = TextEditingController();
+  TextEditingController passwordField = TextEditingController();
+
+  GlobalKey<FormState> form = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage("assets/bgimage.jpeg"),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Welcome",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextFormField(
-              decoration: const InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                hintText: "Enter Username",
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                hintText: "Enter Password",
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-                fixedSize: MaterialStateProperty.all(
-                  const Size.fromWidth(200),
+      // appBar: AppBar(
+      //   title: const Text("Login"),
+      //   centerTitle: true,
+      //   elevation: 0,
+      // ),
+      body: Form(
+        key: form,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Colors.blue,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Welcome",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              onPressed: () {},
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                    fontSize: 20,
+              const Text(
+                "Please login to continue",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              const SizedBox(height: 40),
+              TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Enter Username",
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                obscureText: obsecure,
+                validator: (value) {
+                  if (value!.length < 8) {
+                    return "Password should be at least 8 character long";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Enter Password",
+                  suffixIcon: IconButton(
+                    icon: obsecure
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        obsecure = !obsecure;
+                      });
+                    },
                   ),
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Don't have an account ?",
-                  style: TextStyle(
-                    color: Colors.white,
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                  fixedSize: MaterialStateProperty.all(
+                    const Size.fromWidth(200),
                   ),
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "SignUp",
+                onPressed: () {
+                  if (form.currentState!.validate()) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/homepage',
+                      (route) => false,
+                    );
+                  } else {
+                    print("There was a problem");
+                  }
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Login",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
+                      fontSize: 20,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Don't have an account ?",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "SignUp",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
