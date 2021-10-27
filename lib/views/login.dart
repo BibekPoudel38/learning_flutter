@@ -13,7 +13,6 @@ class _LoginPageState extends State<LoginPage> {
   // declaring textcontroller for username and password
   TextEditingController usernameField = TextEditingController();
   TextEditingController passwordField = TextEditingController();
-
   GlobalKey<FormState> form = GlobalKey<FormState>();
 
   @override
@@ -58,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               TextFormField(
+                controller: passwordField,
                 obscureText: obsecure,
                 validator: (value) {
                   if (value!.length < 8) {
@@ -97,8 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                       '/homepage',
                       (route) => false,
                     );
-                  } else {
-                    print("There was a problem");
                   }
                 },
                 child: const Padding(

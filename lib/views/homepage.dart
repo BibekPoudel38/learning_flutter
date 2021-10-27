@@ -33,42 +33,96 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Homepage"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.account_circle_outlined),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: const Icon(Icons.account_circle_outlined),
+        //   ),
+        // ],
       ),
-      drawer: sideDrawer(),
+      // drawer: sideDrawer(),
       body: Container(
-        // child: chatsList(),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          itemCount: chats.length,
+        child: ListView.builder(
+          itemCount: 15,
           itemBuilder: (context, index) {
-            return SizedBox(
+            return Container(
+              margin: const EdgeInsets.all(4),
               height: 150,
-              child: Card(
-                child: Column(
-                  children: [
-                    Image.network(
-                      chats[index].profilePicture.toString(),
-                      height: 120,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Card(
+                      child: Container(
+                        height: 100,
+                        color: Colors.yellow.shade300,
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 150,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  "Hello World",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                Text("This is a message to World")
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    ListTile(
-                      title: Text(chats[index].username.toString()),
-                      subtitle: Text(chats[index].message.toString()),
+                  ),
+                  Container(
+                    height: 150,
+                    width: 120,
+                    color: Colors.orange,
+                    child: Image.asset(
+                      "assets/bgimage.jpeg",
+                      fit: BoxFit.cover,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
         ),
       ),
+      // body: Container(
+      //   color: Colors.white,
+      //   // child: chatsList(),
+      //   child: GridView.builder(
+      //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 2,
+      //     ),
+      //     itemCount: chats.length,
+      //     itemBuilder: (context, index) {
+      //       return SizedBox(
+      //         height: 150,
+      //         child: Card(
+      //           child: Column(
+      //             children: [
+      //               Image.network(
+      //                 chats[index].profilePicture.toString(),
+      //                 height: 120,
+      //               ),
+      //               ListTile(
+      //                 title: Text(chats[index].username.toString()),
+      //                 subtitle: Text(chats[index].message.toString()),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 
@@ -86,8 +140,9 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
             subtitle: Text(chats[index].message.toString()),
-            trailing:
-                chats[index].seen ? Icon(Icons.done_all) : Icon(Icons.pending));
+            trailing: chats[index].seen
+                ? const Icon(Icons.done_all)
+                : const Icon(Icons.pending));
       },
     );
   }
