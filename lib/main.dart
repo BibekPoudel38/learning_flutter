@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/views/homepage.dart';
+import 'package:movie_app/views/imagepicker.dart';
 import 'package:movie_app/views/login.dart';
+import 'package:movie_app/views/signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       home: const LoginPage(),
       routes: {
         '/homepage': (_) => const Homepage(),
+        '/signUp': (_) => const SignUpPage(),
       },
     );
   }
