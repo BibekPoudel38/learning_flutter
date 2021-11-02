@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/controller/themecontroller.dart';
 import 'package:movie_app/views/homepage.dart';
-import 'package:movie_app/views/imagepicker.dart';
-import 'package:movie_app/views/login.dart';
 import 'package:movie_app/views/signup.dart';
+
+import 'views/mainpanel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,18 +15,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
-      routes: {
-        '/homepage': (_) => const Homepage(),
-        '/signUp': (_) => const SignUpPage(),
-      },
-    );
+    return GetBuilder<ThemeController>(
+        init: ThemeController(),
+        builder: (themeController) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: themeController.isDarkTheme
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            home: const MainPanel(),
+            routes: {
+              '/homepage': (_) => const Homepage(),
+              '/signUp': (_) => const SignUpPage(),
+            },
+          );
+        });
   }
 }
 

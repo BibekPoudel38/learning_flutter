@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/controller/themecontroller.dart';
 import 'package:movie_app/models/listModel.dart';
 
 class Homepage extends StatefulWidget {
@@ -40,7 +42,7 @@ class _HomepageState extends State<Homepage> {
         //   ),
         // ],
       ),
-      // drawer: sideDrawer(),
+      drawer: sideDrawer(),
       body: Container(
         child: ListView.builder(
           itemCount: 15,
@@ -133,16 +135,17 @@ class _HomepageState extends State<Homepage> {
         // List<String> fruits = ["apple", "ball", "Cat", "Dog"];
 
         return ListTile(
-            title: Text(chats[index].username.toString()),
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                chats[index].profilePicture.toString(),
-              ),
+          title: Text(chats[index].username.toString()),
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+              chats[index].profilePicture.toString(),
             ),
-            subtitle: Text(chats[index].message.toString()),
-            trailing: chats[index].seen
-                ? const Icon(Icons.done_all)
-                : const Icon(Icons.pending));
+          ),
+          subtitle: Text(chats[index].message.toString()),
+          trailing: chats[index].seen
+              ? const Icon(Icons.done_all)
+              : const Icon(Icons.pending),
+        );
       },
     );
   }
@@ -151,6 +154,17 @@ class _HomepageState extends State<Homepage> {
     return Drawer(
       child: ListView(
         children: [
+          GetBuilder<ThemeController>(
+              init: ThemeController(),
+              builder: (themeController) {
+                return SwitchListTile(
+                  value: themeController.isDarkTheme,
+                  title: const Text("Switch to dark theme"),
+                  onChanged: (value) {
+                    themeController.toggleTheme();
+                  },
+                );
+              }),
           Container(
             height: 150,
             color: Colors.blue,
