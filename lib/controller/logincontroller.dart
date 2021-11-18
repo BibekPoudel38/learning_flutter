@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/controller/datasavingcontroller.dart';
 import 'package:movie_app/models/loginmode.dart';
 import 'package:movie_app/models/profilemodel.dart';
 import 'package:movie_app/remoteservices.dart';
@@ -21,6 +22,8 @@ class LoginController extends GetxController {
         Fluttertoast.showToast(msg: "Invalid Login");
       } else {
         profile = profileModelFromJson(response);
+        DataSavingController dataSavingController = Get.find();
+        dataSavingController.saveProfile(profile);
         Navigator.pushNamedAndRemoveUntil(
           context,
           "/homepage",

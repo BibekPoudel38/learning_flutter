@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movie_app/views/homepage.dart';
+import 'package:movie_app/views/search.dart';
 
 class MainPanel extends StatefulWidget {
   const MainPanel({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _MainPanelState extends State<MainPanel> {
         child: PageView(
           children: [
             Homepage(),
-            Container(),
+            SearchPage(),
           ],
         ),
       ),

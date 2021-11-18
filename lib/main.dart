@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:movie_app/controller/themecontroller.dart';
 import 'package:movie_app/views/homepage.dart';
 import 'package:movie_app/views/signup.dart';
+import 'package:movie_app/views/splash.dart';
 
 import 'views/mainpanel.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
             theme: themeController.isDarkTheme
                 ? ThemeData.dark()
                 : ThemeData.light(),
-            home: const MainPanel(),
+            home: const Splash(),
             routes: {
               '/homepage': (_) => const Homepage(),
               '/signUp': (_) => const SignUpPage(),
