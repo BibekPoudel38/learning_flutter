@@ -6,7 +6,7 @@ class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
 
   goToHomepage(BuildContext context, DataSavingController controller) {
-    Future.delayed(Duration(seconds: 5)).then(
+    Future.delayed(const Duration(seconds: 5)).then(
       (value) async {
         await controller.isLoggedin()
             ? Navigator.pushNamedAndRemoveUntil(
@@ -20,30 +20,34 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DataSavingController>(
-        init: DataSavingController(),
-        builder: (controller) {
-          goToHomepage(context, controller);
-          return Scaffold(
-            backgroundColor: Colors.black,
-            body: Container(
-              width: Get.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/logo.gif',
-                    height: 120,
-                    width: 120,
+      init: DataSavingController(),
+      builder: (controller) {
+        goToHomepage(context, controller);
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: SizedBox(
+            width: Get.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/logo.gif',
+                  height: 120,
+                  width: 120,
+                ),
+                const CircularProgressIndicator(),
+                const Text(
+                  "Welcome to my app",
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  Text("Welcome to my app",
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

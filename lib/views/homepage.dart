@@ -1,14 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:movie_app/controller/moviescontroller.dart';
-import 'package:movie_app/controller/themecontroller.dart';
-import 'package:movie_app/controller/upload_movies_controller.dart';
-import 'package:movie_app/models/listModel.dart';
-import 'package:movie_app/models/moviesmodel.dart';
+import 'package:movie_app/controller/datasavingcontroller.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -22,11 +16,79 @@ class _HomepageState extends State<Homepage> {
 
   TextEditingController titleController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  List<String> types = ["Apple", "Ball", "Cat"];
+
+  TextEditingController days = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Admin panel"),
+      ),
+
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            GetBuilder<DataSavingController>(
+              init: DataSavingController(),
+              builder: (controller) {
+                return ListTile(
+                  title: const Text("Logout"),
+                  trailing: Icon(Icons.logout),
+                  onTap: () {
+                    // controller.logout();
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //     context, '/login', (route) => false);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Warning"),
+                          content: const Text("Do You want to logout?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("No"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                controller.logout();
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/login',
+                                  (route) => false,
+                                );
+                              },
+                              child: const Text("Yes"),
+                            ),
+                            DropdownButtonFormField(
+                              onChanged: (val) {
+                                days.text = val.toString();
+                              },
+                              items: [
+                                for (String val in types)
+                                  DropdownMenuItem(
+                                    child: Text(
+                                      val.toString(),
+                                    ),
+                                    value: val,
+                                  ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
 
       body: Container(),

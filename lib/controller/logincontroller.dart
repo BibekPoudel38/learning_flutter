@@ -22,7 +22,8 @@ class LoginController extends GetxController {
         Fluttertoast.showToast(msg: "Invalid Login");
       } else {
         profile = profileModelFromJson(response);
-        DataSavingController dataSavingController = Get.find();
+        DataSavingController dataSavingController =
+            Get.put(DataSavingController());
         dataSavingController.saveProfile(profile);
         Navigator.pushNamedAndRemoveUntil(
           context,

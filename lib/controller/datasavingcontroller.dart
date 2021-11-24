@@ -10,9 +10,14 @@ class DataSavingController extends GetxController {
     prefs.setString('profile', profileString);
   }
 
+  logout() async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.remove('profile');
+  }
+
   Future<bool> isLoggedin() async {
     prefs = await SharedPreferences.getInstance();
-    String data = prefs.getString('profile')!;
+    String data = prefs.getString('profile') ?? "";
     if (data == "") {
       return false;
     } else {
